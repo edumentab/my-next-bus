@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { parseString } from 'xml2js';
 
-import DepartureCard from './components/DepartureCard';
-import FetchErrorAlert from './components/FetchErrorAlert';
-
 import { containerStyle } from './styles';
 
-const BUS_STOP_ID = "80002";
+// YOU NEED TO GO AND FIND THE BUS STOP ID HERE: http://www.labs.skanetrafiken.se/ endpoint "Neareststation"
+const BUS_STOP_ID = "you-need-to-go-and-look-this-up";
 const SKANETRAFIKEN_URL = `/.netlify/functions/departures?stop=${BUS_STOP_ID}`;
 
 const ONE_SECOND = 1000 /* milliseconds */;
@@ -65,21 +63,10 @@ class App extends Component {
   }
 
   render() {
-    let cards = Object.entries(this.state.departuresPerLine).map(([lineNumber, departures]) => (
-      <DepartureCard
-        key={lineNumber}
-        lineNumber={lineNumber}
-        departures={departures}
-        currentTime={this.state.currentTime}
-      />
-    ));
-
     return (
       <div className="container" style={containerStyle}>
         <div className="row">
-          {this.state.fetchError
-            ? <FetchErrorAlert />
-            : cards}
+          <!-- application goes here -->
         </div>
       </div>
     );
