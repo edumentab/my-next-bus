@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { parseString } from 'xml2js';
 
 import DepartureCard from './components/DepartureCard';
+import FetchErrorAlert from './components/FetchErrorAlert';
 
 import { containerStyle } from './styles';
 
@@ -26,6 +27,7 @@ class App extends Component {
     this.state = {
       departuresPerLine: {},
       currentTime: new Date(),
+      fetchError: false,
     };
   }
 
@@ -48,6 +50,8 @@ class App extends Component {
         });
       });
       reader.readAsText(blob, "UTF-8");
+    }).catch((error) => {
+      this.setState({ fetchError: true });
     });
 
     this.intervalHandle = setInterval(
@@ -73,7 +77,9 @@ class App extends Component {
     return (
       <div className="container" style={containerStyle}>
         <div className="row">
-          {cards}
+          {this.state.fetchError
+            ? <FetchErrorAlert />
+            : cards}
         </div>
       </div>
     );

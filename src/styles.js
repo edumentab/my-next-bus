@@ -45,4 +45,12 @@ export const arcStyle = {
   strokeLinecap: "round",
 };
 
+export const alertStyle = {
+  display: "flex",
+};
 
+export const alertIconStyle = {
+  fontSize: "48px",
+  paddingRight: "0.4em",
+  alignSelf: "center",
+};
