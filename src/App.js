@@ -129,9 +129,12 @@ class App extends Component {
       reader.addEventListener("loadend", () => {
         parseString(reader.result, (err, result) => {
           let lines = extractLinesFromXml(result);
-          this.setState({
-            departures: extractDeparturesForLine(lines, "3"),
-          });
+          let lineNumbers = new Set(lines.map(line => line.No[0]));
+          let departures = {};
+          for (let lineNumber of lineNumbers) {
+            departures[lineNumber] = extractDeparturesForLine(lines, lineNumber);
+          }
+          this.setState({ departures });
         });
       });
       reader.readAsText(blob, "UTF-8");
@@ -153,15 +156,22 @@ class App extends Component {
       return null;
     }
 
-    let secondsToNextBus = this.state.departures.map(this.remainingSeconds).find(s => (s >= -60));
-    let minutes = clampBelow(Math.floor(secondsToNextBus / 60 + 1), 0);
-    let showArcs = minutes > 0 && minutes <= 3;
+    return Object.keys(this.state.departures).map((lineNumber) => {
+      let secondsToNextBus = this.state.departures[lineNumber].map(this.remainingSeconds).find(s => (s >= -60));
+      let minutes = clampBelow(Math.floor(secondsToNextBus / 60 + 1), 0);
+      let showArcs = minutes > 0 && minutes <= 3;
 
-    return (
-      showArcs
-        ? <RemainingTimeArcs t={secondsToNextBus} minutes={minutes} />
-        : <MinuteCount minutes={minutes} />
-    );
+      return (
+        <div key={lineNumber}>
+          <h2>Line {lineNumber}</h2>
+          {
+            showArcs
+              ? <RemainingTimeArcs t={secondsToNextBus} minutes={minutes} />
+              : <MinuteCount minutes={minutes} />
+          }
+        </div>
+      );
+    });
   }
 }
 
