@@ -39,6 +39,9 @@ class App extends Component {
       reader.addEventListener("loadend", () => {
         parseString(reader.result, (err, result) => {
           let lines = extractLinesFromXml(result);
+          if (typeof lines === "undefined") {
+            lines = [];
+          }
           let lineNumbers = new Set(lines.map(line => line.No[0]));
           let departuresPerLine = {};
           for (let lineNumber of lineNumbers) {
@@ -66,7 +69,7 @@ class App extends Component {
     return (
       <div className="container" style={containerStyle}>
         <div className="row">
-          <!-- application goes here -->
+          <em className="remove-me">write your application here</em>
         </div>
       </div>
     );
