@@ -5,7 +5,9 @@ import DepartureCard from './components/DepartureCard';
 
 import { containerStyle } from './styles';
 
-const SKANETRAFIKEN_URL = "http://www.labs.skanetrafiken.se/v2.2/stationresults.asp?selPointFrKey=80002";
+const BUS_STOP_ID = "80002";
+const SKANETRAFIKEN_URL = `http://www.labs.skanetrafiken.se/v2.2/stationresults.asp?selPointFrKey=${BUS_STOP_ID}`;
+
 const ONE_SECOND = 1000 /* milliseconds */;
 const FRAMES_PER_SECOND = 60;
 
