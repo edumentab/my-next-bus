@@ -14,6 +14,12 @@ const textStyle = {
   fontSize: "48px",
 };
 
+const svgStyle = {
+  alignSelf: "center",
+  width: "100",
+  height: "100",
+};
+
 function interpolate(lowA, highA, lowB, highB, b) {
   return (b - lowB) / (highB - lowB) * (highA - lowA) + lowA;
 }
@@ -26,7 +32,7 @@ const fudge = 5;
 
 export default function RemainingTimeArcs({ t, minutes }) {
   return (
-    <svg>
+    <svg style={svgStyle}>
       <circle cx={50} cy={50} r={40} style={circleStyle} />
 
       {t > 0 && (

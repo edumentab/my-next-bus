@@ -4,8 +4,12 @@ import { parseString } from 'xml2js';
 import DepartureCard from './components/DepartureCard';
 
 const SKANETRAFIKEN_URL = "http://www.labs.skanetrafiken.se/v2.2/stationresults.asp?selPointFrKey=80002";
-const ONE_SECOND = 1000;
+const ONE_SECOND = 1000 /* milliseconds */;
 const FRAMES_PER_SECOND = 60;
+
+const containerStyle = {
+  marginTop: "3em"
+};
 
 function extractLinesFromXml(result) {
   return result["soap:Envelope"]["soap:Body"][0].GetDepartureArrivalResponse[0].GetDepartureArrivalResult[0].Lines[0].Line;
@@ -66,7 +70,13 @@ class App extends Component {
       />
     ));
 
-    return cards;
+    return (
+      <div className="container" style={containerStyle}>
+        <div className="row">
+          {cards}
+        </div>
+      </div>
+    );
   }
 }
 
