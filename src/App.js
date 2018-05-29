@@ -111,6 +111,7 @@ let MinuteCount = ({ minutes }) => (
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       departures: [],
       currentTime: new Date(),
@@ -140,10 +141,14 @@ class App extends Component {
       reader.readAsText(blob, "UTF-8");
     });
 
-    setInterval(
+    this.intervalHandle = setInterval(
       () => (this.setState({ currentTime: new Date() })),
       ONE_SECOND / FRAMES_PER_SECOND
     );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalHandle);
   }
 
   remainingSeconds(departure) {
