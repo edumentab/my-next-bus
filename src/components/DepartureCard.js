@@ -3,20 +3,9 @@ import React from 'react';
 import RemainingTimeArcs from './RemainingTimeArcs';
 import MinuteCount from './MinuteCount';
 
+import { cardStyle, cardBodyStyle, cardTitleStyle } from '../styles';
+
 const SECONDS_TO_KEEP_AFTER_DEPARTURE = 60;
-
-const cardStyle = {
-  boxShadow: "3px 3px 10px #bbb",
-};
-
-const cardBodyStyle = {
-  display: "flex",
-  flexDirection: "column",
-};
-
-const flexAlignCenter = {
-  alignSelf: "center",
-};
 
 function clampBelow(value, lowerLimit) {
   return Math.max(value, lowerLimit);
@@ -39,7 +28,7 @@ export default function DepartureCard({ lineNumber, departures, currentTime }) {
     <div className="col-sm-2">
       <div className="card" style={cardStyle}>
         <div className="card-body" style={cardBodyStyle}>
-          <h3 className="card-title" style={flexAlignCenter}>Line {lineNumber}</h3>
+          <h3 className="card-title" style={cardTitleStyle}>Line {lineNumber}</h3>
           {
             showArcs
               ? <RemainingTimeArcs t={secondsToNextBus} minutes={minutes} />

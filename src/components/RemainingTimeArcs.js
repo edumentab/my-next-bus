@@ -2,23 +2,7 @@ import React from 'react';
 
 import SoftArc from './SoftArc.js';
 
-const circleStyle = {
-  fill: "none",
-  stroke: "#eee",
-  strokeWidth: 6,
-};
-
-const textStyle = {
-  textAnchor: "middle",
-  dominantBaseline: "central",
-  fontSize: "48px",
-};
-
-const svgStyle = {
-  alignSelf: "center",
-  width: "100",
-  height: "100",
-};
+import { circleStyle, textStyle, svgStyle } from '../styles';
 
 function interpolate(lowA, highA, lowB, highB, b) {
   return (b - lowB) / (highB - lowB) * (highA - lowA) + lowA;

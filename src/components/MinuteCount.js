@@ -1,22 +1,6 @@
 import React from 'react';
 
-const filledCircleStyle = {
-  fill: "#eee",
-  stroke: "#eee",
-  strokeWidth: 6,
-};
-
-const textStyle = {
-  textAnchor: "middle",
-  dominantBaseline: "central",
-  fontSize: "48px",
-};
-
-const svgStyle = {
-  alignSelf: "center",
-  width: "100",
-  height: "100",
-};
+import { filledCircleStyle, textStyle, svgStyle } from '../styles';
 
 export default function MinuteCount({ minutes }) {
   return (
