@@ -114,50 +114,52 @@ class App extends Component {
     this.state = {
       departures: [],
       currentTime: new Date(),
-      remainingSeconds: 12,
     };
+
+    this.remainingSeconds = this.remainingSeconds.bind(this);
   }
 
   componentDidMount() {
-    // let request = new Request(SKANETRAFIKEN_URL);
-    //
-    // fetch(request).then((response) => {
-    //   return response.blob();
-    // }).then((blob) => {
-    //   let reader = new FileReader();
-    //   reader.addEventListener("loadend", () => {
-    //     parseString(reader.result, (err, result) => {
-    //       let lines = extractLinesFromXml(result);
-    //       this.setState({
-    //         departures: extractDeparturesForLine(lines, "3"),
-    //       });
-    //     });
-    //   });
-    //   reader.readAsText(blob, "UTF-8");
-    // });
-    //
-    // setInterval(() => this.setState({ currentTime: new Date() }), ONE_SECOND);
+    let request = new Request(SKANETRAFIKEN_URL);
 
-    setInterval(() => this.setState(
-      (state) => ({ ...state, remainingSeconds: state.remainingSeconds - 1 / FRAMES_PER_SECOND })),
+    fetch(request).then((response) => {
+      return response.blob();
+    }).then((blob) => {
+      let reader = new FileReader();
+      reader.addEventListener("loadend", () => {
+        parseString(reader.result, (err, result) => {
+          let lines = extractLinesFromXml(result);
+          this.setState({
+            departures: extractDeparturesForLine(lines, "3"),
+          });
+        });
+      });
+      reader.readAsText(blob, "UTF-8");
+    });
+
+    setInterval(
+      () => (this.setState({ currentTime: new Date() })),
       ONE_SECOND / FRAMES_PER_SECOND
     );
   }
 
-  remainingTime(departure) {
-    let seconds = (new Date(departure) - this.state.currentTime) / 1000;
-    let minutes = Math.floor(seconds / 60);
-    return `in ${minutes} minute${minutes === 1 ? "" : "s"}`;
+  remainingSeconds(departure) {
+    return Math.floor((new Date(departure) - this.state.currentTime) / 1000);
   }
 
   render() {
-    let t = clampBelow(this.state.remainingSeconds, 0);
-    let minutes = clampBelow(Math.floor(this.state.remainingSeconds / 60 + 1), 0);
+    // exit early if we have no data
+    if (this.state.departures.length === 0) {
+      return null;
+    }
+
+    let secondsToNextBus = this.state.departures.map(this.remainingSeconds).find(s => (s >= -60));
+    let minutes = clampBelow(Math.floor(secondsToNextBus / 60 + 1), 0);
     let showArcs = minutes > 0 && minutes <= 3;
 
     return (
       showArcs
-        ? <RemainingTimeArcs t={t} minutes={minutes} />
+        ? <RemainingTimeArcs t={secondsToNextBus} minutes={minutes} />
         : <MinuteCount minutes={minutes} />
     );
   }
