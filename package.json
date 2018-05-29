@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "netlify-lambda": "^0.4.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-scripts": "1.1.4",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
     "xml2js": "^0.4.19"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build; netlify-lambda build src/functions",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve-lambda": "netlify-lambda serve src/functions"
   }
 }

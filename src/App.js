@@ -7,7 +7,7 @@ import FetchErrorAlert from './components/FetchErrorAlert';
 import { containerStyle } from './styles';
 
 const BUS_STOP_ID = "80002";
-const SKANETRAFIKEN_URL = `http://www.labs.skanetrafiken.se/v2.2/stationresults.asp?selPointFrKey=${BUS_STOP_ID}`;
+const SKANETRAFIKEN_URL = `/.netlify/functions/departures?stop=${BUS_STOP_ID}`;
 
 const ONE_SECOND = 1000 /* milliseconds */;
 const FRAMES_PER_SECOND = 60;
